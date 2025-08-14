@@ -1,0 +1,9 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - postgresql
+runcmd:
+  - echo "listen_addresses = '*'" >> /etc/postgresql/12/main/postgresql.conf
+  - echo "host    all             all             10.0.1.0/24             md5" >> /etc/postgresql/12/main/pg_hba.conf
+  - systemctl restart postgresql
