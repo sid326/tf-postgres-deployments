@@ -60,6 +60,7 @@ resource "azurerm_linux_virtual_machine" "pg_vm" {
   size                  = var.vm_size
   admin_username        = var.admin_username
   admin_password        = var.admin_password
+  disable_password_authentication = false
   network_interface_ids = [azurerm_network_interface.pg_nic[count.index].id]
   os_disk {
     caching              = "ReadWrite"
@@ -68,8 +69,9 @@ resource "azurerm_linux_virtual_machine" "pg_vm" {
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "20_04-lts"
+    sku       = "18.04-LTS"
     version   = "latest"
   }
+
   custom_data = filebase64("cloud-init-postgres.yaml")
 }
